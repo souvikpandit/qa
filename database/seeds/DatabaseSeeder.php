@@ -11,6 +11,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        /**
+         * method chaining with each() method
+         * create() insert records in database
+         * saveMany() creates more than one record
+         * make() will genarate objects and store ir to memory  
+         */
+        factory(App\User::class,10)->create()->each( function($user){
+            $user->questions()
+                ->saveMany(
+                    factory(App\Question::class,rand(1,5))->make()
+                );
+        } );
     }
 }
