@@ -41,4 +41,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Question::class);
     }
+
+    /**
+     * this function is an Accessor.
+     * $question->user->url in questions/index is not define in table,show we use Accessor.
+     * this funcion will return a route to show the question details 
+     */
+    public function getUrlAttribute()
+    {
+        return '#';
+    }
 }
