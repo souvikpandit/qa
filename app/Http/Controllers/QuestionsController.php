@@ -14,6 +14,14 @@ class QuestionsController extends Controller
      */
     public function index()
     {
+        /**
+         * Question::with('user) means this will load user function from Question model
+         * That is because in user function we use eloquent relationship
+         * if we not use with method then it will cause n+1 query problem
+         * because eloquent relationship loads lasily
+         * thats why we use with method to load when Question Model is called
+         * this is called eager loding
+         */
         $questions = Question::with('user')->latest()->paginate(10);
         return view('questions.index',compact('questions'));
     }
