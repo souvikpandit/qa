@@ -43,6 +43,21 @@ class Question extends Model
     {
         return $this->created_at->diffForHumans();
     }
-
+    /**
+     * This Is a Accessor.
+     * it Returns the color depending on the status of the question
+     */
+    public function getStatusAttribute()
+    {
+        if ($this->answers > 0) {
+            if ($this->best_answer_id) {
+                return "answer-accepted";
+            }
+            return "answered";
+        } 
+            return "unanswered";
+        
+        
+    }
 
 }
