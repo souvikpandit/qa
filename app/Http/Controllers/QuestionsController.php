@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Question;
 use Illuminate\Http\Request;
+use App\Http\Requests\AskQuestionRequest;
 
 class QuestionsController extends Controller
 {
@@ -43,9 +44,25 @@ class QuestionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    /**
+     * Here we use a saparate file to do the validation rule,
+     * So we create a request by the command-
+     * php artisan make:request AskQuestionRequest
+     * it will create a folder named Requests inside app/Http/Controllers
+     * Inside of the folder all the requests are stored
+     * And we import the class above
+     */
+    /**
+     * In this store method the request object first call the user model
+     * In that model there exists a questions method
+     * Then we use create() 
+     * This will create an instance of question model,and store the requested inputs in the question table
+     * Here we use all(),but we can also do this by using only() Ex-only('title','body') 
+     */
+    public function store(AskQuestionRequest $request)
     {
-        return $request->title;
+        $request->user()->questions()->create($request->all());
+        return redirect('/questions');
     }
 
     /**
