@@ -31,7 +31,7 @@ class Question extends Model
      */
     public function getUrlAttribute()
     {
-        return route('questions.show',$this->id);
+        return route('questions.show',$this->slug);
     }
     /**
      * This is also a accessor.
@@ -58,6 +58,15 @@ class Question extends Model
             return "unanswered";
         
         
+    }
+
+    /**
+     * this is an accessor.
+     * this helps us to convert the question body into html format
+     */
+    public function getBodyHtmlAttribute()
+    {
+        return \Parsedown::instance()->text($this->body);
     }
 
 }
