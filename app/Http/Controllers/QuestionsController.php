@@ -49,7 +49,7 @@ class QuestionsController extends Controller
      * So we create a request by the command-
      * php artisan make:request AskQuestionRequest
      * it will create a folder named Requests inside app/Http/Controllers
-     * Inside of the folder all the requests are stored
+     * Inside the folder all the requests are stored
      * And we import the class above
      */
     /**
@@ -62,7 +62,7 @@ class QuestionsController extends Controller
     public function store(AskQuestionRequest $request)
     {
         $request->user()->questions()->create($request->all());
-        return redirect('/questions');
+        return redirect('/questions')->with('success','You have successfully ask the Question');
     }
 
     /**
@@ -84,7 +84,7 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+        return view('questions.edit',compact('question'));
     }
 
     /**
@@ -94,9 +94,10 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(AskQuestionRequest $request, Question $question)
     {
-        //
+        $question->update($request->only('title','body'));
+        return redirect('/questions')->with('success','Your Question has been Updated');
     }
 
     /**
