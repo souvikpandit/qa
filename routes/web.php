@@ -27,5 +27,8 @@ Route::get('/home', 'HomeController@index')->name('home');
  * then we have to bind the route
  * to achive that we need to go boot method is Providers/RouteServiceProvider 
  */
-Route::resource('questions', 'QuestionsController')->except('show');
-Route::get('/questions/{slug}','QuestionsController@show')->name('questions.show');
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('questions', 'QuestionsController')->except('show');
+    Route::get('/questions/{slug}','QuestionsController@show')->name('questions.show');    
+});
+
